@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="gr__getbootstrap_com"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <script src="js/modernizr.custom.js"></script>
+
+    <style>
+
+        .rb-video {
+            height: 100vh;
+            position: relative;
+            color: white;
+            overflow: hidden;
+            background-color: black;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+
+        .rb-video-content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 80%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+        }
+
+        .rb-video-overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+
+    </style>
+
+
+    </head>
+
+    <body data-gr-c-s-loaded="true" onload="init();" style="margin:0px;">
+
+        <nav style="background: rgba(255, 255, 255, 0.00); border-bottom: none; z-index: 2;" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header navbar-right">
+                    <button id="showLeft" class="btn btn-primary navbar-btn">Show/Hide Left Slide Menu</button>
+
+                </div>
+            </div>
+        </nav>
+
+
+
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" style="z-index: 2;">
+            <h3>Menu</h3>
+            <a href="#">Celery seakale</a>
+            <a href="#">Dulse daikon</a>
+            <a href="#">Zucchini garlic</a>
+            <a href="#">Catsear azuki bean</a>
+            <a href="#">Dandelion bunya</a>
+            <a href="#">Rutabaga</a>
+        </nav>
+
+
+
+        <section>
+            <div class="container">
+
+
+            </div>
+        </section>
+
+        <!-- Full screen video background -->
+
+        <section>
+
+
+
+
+
+            <div class="rb-video">
+
+
+                <video poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bgvid" playsinline autoplay muted loop>
+                    <source src="https://s3.eu-west-2.amazonaws.com/diagknows-assets/water-background.webm" type="video/webm">
+                    <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
+                </video>
+
+
+
+
+                <div class="rb-video-overlay"></div>
+
+                <div class="rb-video-content">
+
+                    <div id="animation_container">
+                        <canvas id="canvas" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
+                        <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; position: absolute; display: block;">
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+
+
+        <!-- Bootstrap core JavaScript
+================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="js/bootstrap.js"></script>
+
+        <div class="grammarly-disable-indicator"></div>
+
+        <style>
+
+            #canvas {
+                width: 100% !important;
+                height: auto !important;
+                padding: 0 10em 0 10em;
+            }
+
+            #animation_container {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+        </style>
+        <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+        <script src="js/diagknows-logo.js"></script>
+        <script>
+            var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+            function init() {
+                canvas = document.getElementById("canvas");
+                anim_container = document.getElementById("animation_container");
+                dom_overlay_container = document.getElementById("dom_overlay_container");
+                var comp=AdobeAn.getComposition("1E5D93A278C64CC7A11860BC1DAB6F56");
+                var lib=comp.getLibrary();
+                handleComplete({},comp);
+            }
+            function handleComplete(evt,comp) {
+                //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+                var lib=comp.getLibrary();
+                var ss=comp.getSpriteSheet();
+                exportRoot = new lib.diagknowslogo();
+                stage = new lib.Stage(canvas);
+                stage.addChild(exportRoot);	
+                //Registers the "tick" event listener.
+                fnStartAnimation = function() {
+                    createjs.Ticker.setFPS(lib.properties.fps);
+                    createjs.Ticker.addEventListener("tick", stage);
+                }	    
+                //Code to support hidpi screens and responsive scaling.
+                function makeResponsive(isResp, respDim, isScale, scaleType) {		
+                    var lastW, lastH, lastS=1;		
+                    window.addEventListener('resize', resizeCanvas);		
+                    resizeCanvas();		
+                    function resizeCanvas() {			
+                        var w = lib.properties.width, h = lib.properties.height;			
+                        var iw = window.innerWidth, ih=window.innerHeight;			
+                        var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
+                        if(isResp) {                
+                            if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
+                                sRatio = lastS;                
+                            }				
+                            else if(!isScale) {					
+                                if(iw<w || ih<h)						
+                                    sRatio = Math.min(xRatio, yRatio);				
+                            }				
+                            else if(scaleType==1) {					
+                                sRatio = Math.min(xRatio, yRatio);				
+                            }				
+                            else if(scaleType==2) {					
+                                sRatio = Math.max(xRatio, yRatio);				
+                            }			
+                        }			
+                        canvas.width = w*pRatio*sRatio;			
+                        canvas.height = h*pRatio*sRatio;
+                        canvas.style.width = dom_overlay_container.style.width = anim_container.style.width =  w*sRatio+'px';				
+                        canvas.style.height = anim_container.style.height = dom_overlay_container.style.height = h*sRatio+'px';
+                        stage.scaleX = pRatio*sRatio;			
+                        stage.scaleY = pRatio*sRatio;			
+                        lastW = iw; lastH = ih; lastS = sRatio;		
+                    }
+                }
+                makeResponsive(true,'both',false,1);	
+                AdobeAn.compositionLoaded(lib.properties.id);
+                fnStartAnimation();
+            }
+        </script>
+
+
+        <script src="js/classie.js"></script>
+        <script>
+            var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+                menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+                menuTop = document.getElementById( 'cbp-spmenu-s3' ),
+                menuBottom = document.getElementById( 'cbp-spmenu-s4' ),
+                showLeft = document.getElementById( 'showLeft' ),
+                showRight = document.getElementById( 'showRight' ),
+                showTop = document.getElementById( 'showTop' ),
+                showBottom = document.getElementById( 'showBottom' ),
+                showLeftPush = document.getElementById( 'showLeftPush' ),
+                showRightPush = document.getElementById( 'showRightPush' ),
+                body = document.body;
+
+            showLeft.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( menuLeft, 'cbp-spmenu-open' );
+                disableOther( 'showLeft' );
+            };
+            showRight.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( menuRight, 'cbp-spmenu-open' );
+                disableOther( 'showRight' );
+            };
+            showTop.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( menuTop, 'cbp-spmenu-open' );
+                disableOther( 'showTop' );
+            };
+            showBottom.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( menuBottom, 'cbp-spmenu-open' );
+                disableOther( 'showBottom' );
+            };
+            showLeftPush.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( body, 'cbp-spmenu-push-toright' );
+                classie.toggle( menuLeft, 'cbp-spmenu-open' );
+                disableOther( 'showLeftPush' );
+            };
+            showRightPush.onclick = function() {
+                classie.toggle( this, 'active' );
+                classie.toggle( body, 'cbp-spmenu-push-toleft' );
+                classie.toggle( menuRight, 'cbp-spmenu-open' );
+                disableOther( 'showRightPush' );
+            };
+
+            function disableOther( button ) {
+                if( button !== 'showLeft' ) {
+                    classie.toggle( showLeft, 'disabled' );
+                }
+                if( button !== 'showRight' ) {
+                    classie.toggle( showRight, 'disabled' );
+                }
+                if( button !== 'showTop' ) {
+                    classie.toggle( showTop, 'disabled' );
+                }
+                if( button !== 'showBottom' ) {
+                    classie.toggle( showBottom, 'disabled' );
+                }
+                if( button !== 'showLeftPush' ) {
+                    classie.toggle( showLeftPush, 'disabled' );
+                }
+                if( button !== 'showRightPush' ) {
+                    classie.toggle( showRightPush, 'disabled' );
+                }
+            }
+        </script>
+
+
+    </body>
+
+
+
+</html>
