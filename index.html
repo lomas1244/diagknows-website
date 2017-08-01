@@ -1,65 +1,146 @@
 <!DOCTYPE html>
-<html lang="en" class="gr__getbootstrap_com"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-    <title>Starter Template for Bootstrap</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Background video - fullPage.js</title>
+        <meta name="author" content="Alvaro Trigo Lopez" />
+        <meta name="description" content="fullPage full-screen backgrounds." />
+        <meta name="keywords"  content="fullpage,jquery,demo,screen,fullscreen,backgrounds,full-screen" />
+        <meta name="Resource-type" content="Document" />
 
-    <link rel="stylesheet" type="text/css" href="css//bootstrap.css">
-
-    <link rel="stylesheet" type="text/css" href="css/vendors/default.css" />
-    <link rel="stylesheet" type="text/css" href="css/vendors/component.css" />
-    <script src="js/modernizr.custom.js"></script>
-
-    <style>
-
-        .rb-video {
-            height: 100vh;
-            position: relative;
-            color: white;
-            overflow: hidden;
-            background-color: black;
-            background-size: cover;
-            background-position: 50% 50%;
-        }
-
-        .rb-video-content {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 80%;
-            transform: translateX(-50%) translateY(-50%);
-            text-align: center;
-        }
-
-        .rb-video-overlay {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        video {
-            width: 100%;
-            height: auto;
-        }
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
 
-    </style>
+        <link rel="stylesheet" type="text/css" href="css/vendors/component.css">
+        <link rel="stylesheet" type="text/css" href="css/vendors/default.css">
+        <link rel="stylesheet" type="text/css" href="css/vendors/fullpagejs/jquery.fullPage.css" />
 
+        <style>
+
+            /* Style for our header texts
+            * --------------------------------------- */
+            h1{
+                font-size: 5em;
+                font-family: arial,helvetica;
+                color: #fff;
+                margin:0;
+                padding:0;
+            }
+
+            /* Centered texts in each section
+            * --------------------------------------- */
+            .section{
+                text-align:center;
+                overflow: hidden;
+            }
+
+            #myVideo{
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                top:0;
+                right:0;
+                width: 100%;
+                height: 100%;
+                background-size: 100% 100%;
+                background-color: black; /* in case the video doesn't fit the whole page*/
+                background-image: /* our video */;
+                background-position: center center;
+                background-size: contain;
+                object-fit: cover; /*cover video background */
+                z-index:3;
+            }
+
+
+
+            /* Layer with position absolute in order to have it over the video
+            * --------------------------------------- */
+            #section0 .layer{
+                position: absolute;
+                z-index: 4;
+                width: 100%;
+                left: 0;
+                top: 43%;
+
+                /* 
+                * Preventing flicker on some browsers 
+                * See http://stackoverflow.com/a/36671466/1081396  or issue #183
+                */
+                -webkit-transform: translate3d(0,0,0);
+                -ms-transform: translate3d(0,0,0);
+                transform: translate3d(0,0,0);
+            }
+
+            /*solves problem with overflowing video in Mac with Chrome */
+            #section0{
+                overflow: hidden;
+            }
+
+
+            /* Bottom menu
+            * --------------------------------------- */
+            #infoMenu li a {
+                color: #fff;
+            }
+
+
+            /* Hiding video controls 
+            * See: https://css-tricks.com/custom-controls-in-html5-video-full-screen/
+            * --------------------------------------- */
+            video::-webkit-media-controls {
+                display:none !important;
+            }
+
+
+
+            #canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            #animation_container {
+                position: absolute;
+                width: 100% !important;
+                height: auto !important;
+                top: 0;
+            }
+
+        </style>
+
+        <!--[if IE]>
+<script type="text/javascript">
+var console = { log: function() {} };
+</script>
+<![endif]-->
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+        <script type="text/javascript" src="js/scrolloverflow.js"></script>
+
+        <script type="text/javascript" src="js/jquery.fullPage.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
+        <script src="js/jquery.fullpage.extensions.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#fullpage').fullpage({
+                    verticalCentered: true,
+                    sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
+                    parallax: true,
+                    parallaxOptions: {type: 'reveal', percentage: 62, property: 'translate'},
+                });
+            });
+        </script>
 
     </head>
+    <body onload="init();">
 
-    <body data-gr-c-s-loaded="true" onload="init();" style="margin:0px;">
-
-        <nav style="background: rgba(255, 255, 255, 0.00); border-bottom: none; z-index: 2;" class="navbar navbar-default navbar-fixed-top">
+        <nav style="background: rgba(255, 255, 255, 0.00); border-bottom: none; z-index: 1;" class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header navbar-right">
-                    <button id="showLeft" class="btn btn-primary navbar-btn">Show/Hide Left Slide Menu</button>
+                    <button id="showLeft" class="btn btn-primary navbar-btn">Menu</button>
 
                 </div>
             </div>
@@ -69,152 +150,48 @@
 
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" style="z-index: 2;">
             <h3>Menu</h3>
-            <a href="#">Celery seakale</a>
-            <a href="#">Dulse daikon</a>
-            <a href="#">Zucchini garlic</a>
-            <a href="#">Catsear azuki bean</a>
-            <a href="#">Dandelion bunya</a>
-            <a href="#">Rutabaga</a>
+            <a href="#">Story</a>
+            <a href="#">Facts</a>
+            <a href="#">Research</a>
+            <a href="#">Impact</a>
+            <a href="#">Social Enterprise</a>
+            <a href="#">The team</a>
         </nav>
 
-
-
-        <section>
-            <div class="container">
-
-
-            </div>
-        </section>
-
-        <!-- Full screen video background -->
-
-        <section>
-
-
-
-
-
-            <div class="rb-video">
-
-
-                <video poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bgvid" playsinline autoplay muted loop>
+        <div id="fullpage">
+            <div class="section " id="section0">
+                <video id="myVideo" loop muted data-autoplay>
                     <source src="https://s3.eu-west-2.amazonaws.com/diagknows-assets/water-background.webm" type="video/webm">
-                    <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
+                    <source src="imgs/flowers.mp4" type="video/mp4">
+
                 </video>
-
-
-
-
-                <div class="rb-video-overlay"></div>
-
-                <div class="rb-video-content">
-
-                    <div id="animation_container">
-                        <canvas id="canvas" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
-                        <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; position: absolute; display: block;">
+                <div class="layer" style="top: 80px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00);">
+                                    <canvas id="canvas" style="position: relative; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
+                                    <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; position: relative; left: 0px; top: 0px; display: block;">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 
 
 
-
                 </div>
             </div>
+            <div class="section" id="section1">
+                <div class="slide" id="slide1"><h1>Slide Backgrounds</h1></div>
+                <div class="slide" id="slide2"><h1>Totally customizable</h1></div>
+            </div>
+            <div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
+            <div class="section" id="section3"><h1>One Image = One thousand words</h1></div>
+        </div>
 
-
-        </section>
-
-
-
-
-
-        <!-- Bootstrap core JavaScript
-================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <script src="js/bootstrap.js"></script>
-
-        <div class="grammarly-disable-indicator"></div>
-
-        <style>
-
-            #canvas {
-                width: 100% !important;
-                height: auto !important;
-                padding: 0 10em 0 10em;
-            }
-
-            #animation_container {
-                width: 100% !important;
-                height: auto !important;
-            }
-
-        </style>
-        <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-        <script src="js/diagknows-logo.js"></script>
-        <script>
-            var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-            function init() {
-                canvas = document.getElementById("canvas");
-                anim_container = document.getElementById("animation_container");
-                dom_overlay_container = document.getElementById("dom_overlay_container");
-                var comp=AdobeAn.getComposition("1E5D93A278C64CC7A11860BC1DAB6F56");
-                var lib=comp.getLibrary();
-                handleComplete({},comp);
-            }
-            function handleComplete(evt,comp) {
-                //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
-                var lib=comp.getLibrary();
-                var ss=comp.getSpriteSheet();
-                exportRoot = new lib.diagknowslogo();
-                stage = new lib.Stage(canvas);
-                stage.addChild(exportRoot);	
-                //Registers the "tick" event listener.
-                fnStartAnimation = function() {
-                    createjs.Ticker.setFPS(lib.properties.fps);
-                    createjs.Ticker.addEventListener("tick", stage);
-                }	    
-                //Code to support hidpi screens and responsive scaling.
-                function makeResponsive(isResp, respDim, isScale, scaleType) {		
-                    var lastW, lastH, lastS=1;		
-                    window.addEventListener('resize', resizeCanvas);		
-                    resizeCanvas();		
-                    function resizeCanvas() {			
-                        var w = lib.properties.width, h = lib.properties.height;			
-                        var iw = window.innerWidth, ih=window.innerHeight;			
-                        var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
-                        if(isResp) {                
-                            if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
-                                sRatio = lastS;                
-                            }				
-                            else if(!isScale) {					
-                                if(iw<w || ih<h)						
-                                    sRatio = Math.min(xRatio, yRatio);				
-                            }				
-                            else if(scaleType==1) {					
-                                sRatio = Math.min(xRatio, yRatio);				
-                            }				
-                            else if(scaleType==2) {					
-                                sRatio = Math.max(xRatio, yRatio);				
-                            }			
-                        }			
-                        canvas.width = w*pRatio*sRatio;			
-                        canvas.height = h*pRatio*sRatio;
-                        canvas.style.width = dom_overlay_container.style.width = anim_container.style.width =  w*sRatio+'px';				
-                        canvas.style.height = anim_container.style.height = dom_overlay_container.style.height = h*sRatio+'px';
-                        stage.scaleX = pRatio*sRatio;			
-                        stage.scaleY = pRatio*sRatio;			
-                        lastW = iw; lastH = ih; lastS = sRatio;		
-                    }
-                }
-                makeResponsive(true,'both',false,1);	
-                AdobeAn.compositionLoaded(lib.properties.id);
-                fnStartAnimation();
-            }
-        </script>
-
+        <div id="fp-nav" class="right" style="margin-top: -43.5px;"><ul><li><a href="#" class=""><span></span></a></li><li><a href="#" class=""><span></span></a></li><li><a href="#" class=""><span></span></a></li><li><a href="#"><span></span></a></li></ul></div>
 
         <script src="js/classie.js"></script>
         <script>
@@ -285,9 +262,71 @@
             }
         </script>
 
+        <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+        <script src="js/diagknows-logo.js"></script>
+        <script>
+            var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+            function init() {
+                canvas = document.getElementById("canvas");
+                anim_container = document.getElementById("animation_container");
+                dom_overlay_container = document.getElementById("dom_overlay_container");
+                var comp=AdobeAn.getComposition("1E5D93A278C64CC7A11860BC1DAB6F56");
+                var lib=comp.getLibrary();
+                handleComplete({},comp);
+            }
+            function handleComplete(evt,comp) {
+                //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+                var lib=comp.getLibrary();
+                var ss=comp.getSpriteSheet();
+                exportRoot = new lib.diagknowslogo();
+                stage = new lib.Stage(canvas);
+                stage.addChild(exportRoot);	
+                //Registers the "tick" event listener.
+                fnStartAnimation = function() {
+                    createjs.Ticker.setFPS(lib.properties.fps);
+                    createjs.Ticker.addEventListener("tick", stage);
+                }	    
+                //Code to support hidpi screens and responsive scaling.
+                function makeResponsive(isResp, respDim, isScale, scaleType) {		
+                    var lastW, lastH, lastS=1;		
+                    window.addEventListener('resize', resizeCanvas);		
+                    resizeCanvas();		
+                    function resizeCanvas() {			
+                        var w = lib.properties.width, h = lib.properties.height;			
+                        var iw = window.innerWidth, ih=window.innerHeight;			
+                        var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
+                        if(isResp) {                
+                            if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
+                                sRatio = lastS;                
+                            }				
+                            else if(!isScale) {					
+                                if(iw<w || ih<h)						
+                                    sRatio = Math.min(xRatio, yRatio);				
+                            }				
+                            else if(scaleType==1) {					
+                                sRatio = Math.min(xRatio, yRatio);				
+                            }				
+                            else if(scaleType==2) {					
+                                sRatio = Math.max(xRatio, yRatio);				
+                            }			
+                        }			
+                        canvas.width = w*pRatio*sRatio;			
+                        canvas.height = h*pRatio*sRatio;
+                        canvas.style.width = dom_overlay_container.style.width = anim_container.style.width =  w*sRatio+'px';				
+                        canvas.style.height = anim_container.style.height = dom_overlay_container.style.height = h*sRatio+'px';
+                        stage.scaleX = pRatio*sRatio;			
+                        stage.scaleY = pRatio*sRatio;			
+                        lastW = iw; lastH = ih; lastS = sRatio;		
+                    }
+                }
+                makeResponsive(true,'both',false,1);	
+                AdobeAn.compositionLoaded(lib.properties.id);
+                fnStartAnimation();
+            }
+        </script>
+
+
+
 
     </body>
-
-
-
 </html>
