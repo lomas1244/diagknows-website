@@ -3,18 +3,22 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Background video - fullPage.js</title>
+        <title>DiagKnows</title>
         <meta name="author" content="Alvaro Trigo Lopez" />
         <meta name="description" content="fullPage full-screen backgrounds." />
         <meta name="keywords"  content="fullpage,jquery,demo,screen,fullscreen,backgrounds,full-screen" />
         <meta name="Resource-type" content="Document" />
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 
 
         <link rel="stylesheet" type="text/css" href="css/vendors/component.css">
         <link rel="stylesheet" type="text/css" href="css/vendors/default.css">
         <link rel="stylesheet" type="text/css" href="css/vendors/fullpagejs/jquery.fullPage.css" />
+
 
         <style>
 
@@ -140,7 +144,7 @@ var console = { log: function() {} };
         <nav style="background: rgba(255, 255, 255, 0.00); border-bottom: none; z-index: 1;" class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header navbar-right">
-                    <button id="showLeft" class="btn btn-primary navbar-btn">Menu</button>
+                    <button id="showLeft" class="btn btn-primary navbar-btn"><i class="fa fa-list" aria-hidden="true"></i> Contents</button>
 
                 </div>
             </div>
@@ -150,17 +154,27 @@ var console = { log: function() {} };
 
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" style="z-index: 2;">
             <h3>Menu</h3>
-            <a href="#">Story</a>
-            <a href="#">Facts</a>
-            <a href="#">Research</a>
-            <a href="#">Impact</a>
-            <a href="#">Social Enterprise</a>
-            <a href="#">The team</a>
+            <ul id="menu">
+                <li data-menuanchor="secondPage">
+                    <a href="#secondPage"><i class="fa fa-film" aria-hidden="true"></i>Story</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i>Facts</a>
+                </li>
+
+                <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Research</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-globe" aria-hidden="true"></i>Impact</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i>Social Enterprise</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-handshake-o" aria-hidden="true"></i>The Team</a></li>
+            </ul>
         </nav>
 
         <div id="fullpage">
-            <div class="section " id="section0">
-                <video id="myVideo" loop muted data-autoplay>
+            <div class="section" id="section0">
+                <video style="background: #fff;" id="myVideo" loop muted data-autoplay>
                     <source src="https://s3.eu-west-2.amazonaws.com/diagknows-assets/water-background.webm" type="video/webm">
                     <source src="imgs/flowers.mp4" type="video/mp4">
 
@@ -183,15 +197,45 @@ var console = { log: function() {} };
 
                 </div>
             </div>
-            <div class="section" id="section1">
-                <div class="slide" id="slide1"><h1>Slide Backgrounds</h1></div>
+            <div class="section" id="secondPage" data-anchor="secondPage">
+                <div class="slide" id="slide1">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00); width:4000px; height:2250px">
+                                    <canvas id="canvas" width="4000" height="2250" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
+                                    <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:4000px; height:2250px; position: absolute; left: 0px; top: 0px; display: block;">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
                 <div class="slide" id="slide2"><h1>Totally customizable</h1></div>
+                <div class="slide" id="slide3"><h1>Slide Backgrounds</h1></div>
+                <div class="fp-slidesNav bottom" style="margin-left: -42px;"><ul><li><a href="#" class="active"><span></span></a></li><li><a href="#"><span></span></a></li><li><a href="#"><span></span></a></li></ul></div>
             </div>
             <div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
             <div class="section" id="section3"><h1>One Image = One thousand words</h1></div>
         </div>
 
-        <div id="fp-nav" class="right" style="margin-top: -43.5px;"><ul><li><a href="#" class=""><span></span></a></li><li><a href="#" class=""><span></span></a></li><li><a href="#" class=""><span></span></a></li><li><a href="#"><span></span></a></li></ul></div>
+        <div id="fp-nav" class="right" style="margin-top: -43.5px;">
+            <ul>
+                <li><a href="#" class=""><span></span></a></li>
+                <li><a href="#" class=""><span></span></a></li>
+                <li><a href="#" class=""><span></span></a></li>
+                <li><a href="#"><span></span></a></li>
+            </ul>
+        </div>
 
         <script src="js/classie.js"></script>
         <script>
@@ -264,6 +308,7 @@ var console = { log: function() {} };
 
         <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
         <script src="js/diagknows-logo.js"></script>
+        <script src="js/diagknows-scene-1.js"></script>
         <script>
             var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
             function init() {
